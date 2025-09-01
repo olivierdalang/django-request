@@ -18,6 +18,7 @@ class Request(models.Model):
     response = models.SmallIntegerField(
         _("response"), choices=HTTP_STATUS_CODES, default=200
     )
+    response_time = models.DurationField(_("response_time"), null=True)
 
     # Request information.
     method = models.CharField(_("method"), default="GET", max_length=7)
@@ -62,8 +63,11 @@ class Request(models.Model):
     def get_user(self):
         return get_user_model().objects.get(pk=self.user_id)
 
-    def from_http_request(self, request, response=None, commit=True):
+    def from_http_request(
+        self, request, response=None, response_time=None, commit=True
+    ):
         # Request information.
+        self.response_time = response_time
         self.method = request.method
         self.path = request.path[:255]
 
