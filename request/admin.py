@@ -15,7 +15,14 @@ from .traffic import modules
 
 
 class RequestAdmin(admin.ModelAdmin):
-    list_display = ("time", "path", "response", "method", "request_from")
+    list_display = (
+        "time",
+        "path",
+        "response",
+        "method",
+        "request_from",
+        "response_time",
+    )
     fieldsets = (
         (
             _("Request"),
@@ -30,14 +37,24 @@ class RequestAdmin(admin.ModelAdmin):
                 )
             },
         ),
-        (_("Response"), {"fields": ("response",)}),
+        (
+            _("Response"),
+            {
+                "fields": (
+                    "response",
+                    "response_time",
+                )
+            },
+        ),
         (
             _("User info"),
             {"fields": ("referer", "user_agent", "ip", "user", "language")},
         ),
     )
+    search_fields = ["path", "query_string"]
     raw_id_fields = ("user",)
     readonly_fields = ("time",)
+    date_hierarchy = "time"
 
     def get_queryset(self, request):
         return super().get_queryset(request).select_related("user")
