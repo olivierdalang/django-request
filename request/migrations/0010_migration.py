@@ -8,7 +8,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('request', '0006_alter_request_method_default'),
+        ('request', '0009_add_response_time'),
     ]
 
     operations = [
