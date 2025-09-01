@@ -20,7 +20,7 @@ class RequestMiddleware:
         start_time = time.monotonic()
         response = self.get_response(request)
         end_time = time.monotonic()
-        response_time = timedelta(end_time - start_time)
+        response_time = timedelta(seconds=end_time - start_time)
         self.create_request_instance(request, response, response_time)
         return response
 
