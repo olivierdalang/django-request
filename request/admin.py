@@ -17,7 +17,19 @@ from .traffic import modules
 class RequestAdmin(admin.ModelAdmin):
     list_display = ("time", "path", "response", "method", "request_from")
     fieldsets = (
-        (_("Request"), {"fields": ("method", "path", "time", "is_secure", "is_ajax")}),
+        (
+            _("Request"),
+            {
+                "fields": (
+                    "method",
+                    "path",
+                    "query_string",
+                    "time",
+                    "is_secure",
+                    "is_ajax",
+                )
+            },
+        ),
         (_("Response"), {"fields": ("response",)}),
         (
             _("User info"),
